@@ -2,7 +2,8 @@ import avatarImage from '../assets/avatar.webp'
 import notesImage from '../assets/taking-notes.webp'
 import yesImage from '../assets/yes.webp'
 import { diffWords } from '../diff'
-import { currentPage, textToHTML, type Editor } from '../editor'
+import { withText } from '../anchor'
+import { currentPage, type Editor } from '../editor'
 import { groupByPage, toMarkdown, toPrompt, type PageGroup } from '../export'
 import type { Store } from '../store'
 import type { Change, CopybaraConfig, Mode } from '../types'
@@ -200,11 +201,18 @@ export const createUi = ({ host, store, editor, config }: UiOptions) => {
         const text = (event.target as HTMLTextAreaElement).value
         const current = store.get(change.id)
         if (!current?.edit) return
-        const edit = text === current.target.text ? undefined : { ...current.edit, text, html: textToHTML(text) }
-        store.put({ ...current, edit, updatedAt: Date.now() })
+        // Keep the edit while typing, even if it briefly matches the original; blur decides.
+        // When the markup can't take the new text as-is, the page keeps its last version and
+        // the list and export carry the new text.
+        const html = withText(current.edit.html, text) ?? current.edit.html
+        store.put({ ...current, edit: { ...current.edit, text, html }, updatedAt: Date.now() })
       },
       onfocusout: () => {
         editingId = null
+        const current = store.get(change.id)
+        if (current?.edit && current.edit.text === current.target.text) {
+          store.put({ ...current, edit: undefined, updatedAt: Date.now() })
+        }
         queueMicrotask(render)
       },
     })

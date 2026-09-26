@@ -54,6 +54,8 @@ export type Editor = ReturnType<typeof createEditor>
 type EditSession = {
   el: HTMLElement
   id?: string
+  /** Captured when editing starts: in a single-page app the URL may change before the edit is saved. */
+  page: Page
   target: Target
   originalHTML: string
   startHTML: string
@@ -142,6 +144,7 @@ export const createEditor = ({ store, ignore, isOwn, onComment, onEscape, onUpda
     editing = {
       el,
       id: existing?.id,
+      page: currentPage(),
       target: existing?.target ?? describe(el),
       originalHTML: existing?.edit?.originalHTML ?? el.innerHTML,
       startHTML: el.innerHTML,
@@ -202,8 +205,8 @@ export const createEditor = ({ store, ignore, isOwn, onComment, onEscape, onUpda
 
     const edit = { text, html: el.innerHTML, originalHTML: session.originalHTML }
     const change: Change = existing
-      ? { ...existing, page: currentPage(), edit, updatedAt: now }
-      : { id: newId(), page: currentPage(), target, edit, createdAt: now, updatedAt: now }
+      ? { ...existing, page: session.page, edit, updatedAt: now }
+      : { id: newId(), page: session.page, target, edit, createdAt: now, updatedAt: now }
     idByElement.set(el, change.id)
     store.put(change)
   }
@@ -443,9 +446,3 @@ export const createEditor = ({ store, ignore, isOwn, onComment, onEscape, onUpda
   }
 }
 
-/** Plain text to HTML for edits made in the panel rather than on the page. */
-export const textToHTML = (text: string) => {
-  const div = document.createElement('div')
-  div.textContent = text
-  return div.innerHTML.replace(/\n/g, '<br>')
-}

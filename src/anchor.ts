@@ -154,6 +154,31 @@ export const resolve = (target: Target, texts: string[]): HTMLElement | null => 
 }
 
 /**
+ * Puts new plain text into existing markup, keeping wrappers like <strong> or <a>. Only possible
+ * when the markup has a single run of text; returns null otherwise, so callers can leave the page
+ * alone rather than flatten it.
+ */
+export const withText = (html: string, text: string): string | null => {
+  const template = document.createElement('template')
+  template.innerHTML = html
+  const walker = document.createTreeWalker(template.content, NodeFilter.SHOW_TEXT)
+  const runs: Text[] = []
+  while (walker.nextNode()) {
+    const node = walker.currentNode as Text
+    if (node.data.trim()) runs.push(node)
+  }
+  if (text.includes('\n') || runs.length > 1) return null
+  if (runs.length === 0) {
+    template.content.append(text)
+  } else {
+    const run = runs[0]!
+    // Keep the surrounding whitespace from the source so the structure still matches.
+    run.data = run.data.match(/^\s*/)![0] + text + run.data.match(/\s*$/)![0]
+  }
+  return template.innerHTML
+}
+
+/**
  * Writes edited HTML back in a way that survives frameworks like React: when the structure is
  * unchanged, only the text nodes are updated so the framework's node references stay valid.
  */

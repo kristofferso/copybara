@@ -15,8 +15,9 @@ let active: CopybaraInstance | null = null
  * Safe to call during server rendering, where it does nothing.
  */
 export const init = (config: CopybaraConfig = {}): CopybaraInstance => {
-  if (typeof window === 'undefined' || config.enabled === false) return noop
+  if (typeof window === 'undefined') return noop
   active?.destroy()
+  if (config.enabled === false) return noop
 
   if (!customElements.get(HOST_TAG)) customElements.define(HOST_TAG, class extends HTMLElement {})
   const host = document.createElement(HOST_TAG)

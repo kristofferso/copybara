@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, expect, test } from 'bun:test'
+import { afterEach, beforeEach, describe, expect, test } from 'bun:test'
 import { init } from '../src/index'
 import type { CopybaraInstance } from '../src/types'
 
@@ -8,6 +8,7 @@ const stored = () => JSON.parse(localStorage.getItem('copybara') ?? '{"changes":
 const wait = (ms = 120) => new Promise(resolve => setTimeout(resolve, ms))
 
 beforeEach(() => {
+  history.replaceState({}, '', '/pricing')
   localStorage.clear()
   sessionStorage.clear()
   document.title = 'Pricing'
@@ -96,4 +97,82 @@ test('saved edits come back after a re-render, and reverting restores the origin
   copybara.setMode('edit')
   editHeadline('Old headline')
   expect(stored()).toHaveLength(0)
+})
+
+test('an edit is saved on the page it started on, even after client-side navigation', async () => {
+  copybara.setMode('edit')
+  const h1 = document.querySelector('h1')!
+  h1.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }))
+  h1.textContent = 'New headline'
+  // The reviewer follows a link before pressing Enter.
+  history.pushState({}, '', '/about')
+  window.dispatchEvent(new PopStateEvent('popstate'))
+  await wait()
+  expect(stored()[0].page.path).toBe('/pricing')
+})
+
+test('init({ enabled: false }) removes a running instance', () => {
+  expect(document.querySelector('copybara-ui')).not.toBeNull()
+  init({ enabled: false })
+  expect(document.querySelector('copybara-ui')).toBeNull()
+  copybara = init()
+})
+
+describe('editing in the panel', () => {
+  const panel = () => document.querySelector('copybara-ui')!.shadowRoot!
+
+  const typeInPanel = (value: string) => {
+    const field = panel().querySelector<HTMLTextAreaElement>('textarea.edit-text')!
+    field.value = value
+    field.dispatchEvent(new Event('input', { bubbles: true }))
+    return field
+  }
+
+  beforeEach(async () => {
+    copybara.destroy()
+    localStorage.clear()
+    document.body.innerHTML = '<main><p><strong>Hello</strong></p></main>'
+    copybara = init()
+    copybara.setMode('edit')
+    const strong = document.querySelector('strong')!
+    strong.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }))
+    strong.textContent = 'Hello!'
+    strong.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }))
+    copybara.open()
+    panel().querySelector<HTMLButtonElement>('button.diff')!.click()
+  })
+
+  test('keeps the change while the text briefly matches the original', () => {
+    typeInPanel('Hello')
+    expect(stored()).toHaveLength(1)
+    typeInPanel('Hello?')
+    expect(stored()[0].edit.text).toBe('Hello?')
+  })
+
+  test('drops the change on blur when it ends up unchanged', () => {
+    const field = typeInPanel('Hello')
+    field.dispatchEvent(new FocusEvent('focusout', { bubbles: true }))
+    expect(stored()).toHaveLength(0)
+  })
+
+  test('keeps the markup of the page element', async () => {
+    // A button with a text label and an icon next to it.
+    copybara.destroy()
+    localStorage.clear()
+    document.body.innerHTML = '<main><button>Save<img src="/icon.png" alt=""></button></main>'
+    copybara = init()
+    copybara.setMode('edit')
+    const button = document.querySelector('button')!
+    const icon = button.querySelector('img')
+    button.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }))
+    button.firstChild!.textContent = 'Save it'
+    button.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }))
+    copybara.open()
+    panel().querySelector<HTMLButtonElement>('button.diff')!.click()
+
+    typeInPanel('Save now')
+    await wait()
+    expect(button.querySelector('img')).toBe(icon)
+    expect(button.textContent).toBe('Save now')
+  })
 })

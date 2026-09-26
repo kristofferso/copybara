@@ -1,5 +1,5 @@
 import { beforeEach, expect, test } from 'bun:test'
-import { applyHTML, contextFor, describe, readText, resolve, selectorFor } from '../src/anchor'
+import { applyHTML, contextFor, describe, readText, resolve, selectorFor, withText } from '../src/anchor'
 
 beforeEach(() => {
   document.body.innerHTML = `
@@ -60,4 +60,12 @@ test('applyHTML keeps existing text nodes when the structure matches', () => {
   applyHTML(p, 'Pay <strong>twice</strong>.<br>Use forever.')
   expect(p.querySelector('strong')).toBe(strong)
   expect(readText(p)).toBe('Pay twice.\nUse forever.')
+})
+
+test('withText keeps wrappers around a single run of text', () => {
+  expect(withText('<strong>Hello</strong>', 'Hi')).toBe('<strong>Hi</strong>')
+  expect(withText('\n  Hello\n', 'Hi')).toBe('\n  Hi\n')
+  // Several runs of text or a new line break cannot be mapped safely.
+  expect(withText('Pay <strong>once</strong>.', 'Pay twice.')).toBeNull()
+  expect(withText('Hello', 'Two\nlines')).toBeNull()
 })
