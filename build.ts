@@ -3,13 +3,24 @@ import { rm } from 'node:fs/promises'
 
 await rm('dist', { recursive: true, force: true })
 
+// Inline the illustrations as data URLs so the package makes no runtime asset requests.
+// (Bun.build has no data URL loader; an unknown loader silently produced empty strings.)
+const inlineImages: Bun.BunPlugin = {
+  name: 'inline-images',
+  setup(build) {
+    build.onLoad({ filter: /\.webp$/ }, async ({ path }) => {
+      const base64 = Buffer.from(await Bun.file(path).arrayBuffer()).toString('base64')
+      return { contents: `export default ${JSON.stringify(`data:image/webp;base64,${base64}`)}`, loader: 'js' }
+    })
+  },
+}
+
 const shared = {
-  target: 'browser',
+  target: 'browser' as const,
   minify: true,
-  sourcemap: 'linked',
-  // Inline the illustrations so the package has no runtime asset requests.
-  loader: { '.webp': 'dataurl' as Bun.Loader },
-} as const
+  sourcemap: 'linked' as const,
+  plugins: [inlineImages],
+}
 
 const results = await Promise.all([
   // ESM for bundlers.
@@ -27,6 +38,15 @@ const results = await Promise.all([
 for (const result of results) {
   if (!result.success) {
     console.error(result.logs)
+    process.exit(1)
+  }
+}
+
+// Guard against shipping without illustrations again.
+for (const file of ['dist/index.js', 'dist/copybara.global.js']) {
+  const images = (await Bun.file(file).text()).match(/data:image\/webp;base64,[A-Za-z0-9+/]{100,}/g) ?? []
+  if (images.length < 3) {
+    console.error(`${file}: expected 3 inlined images, found ${images.length}`)
     process.exit(1)
   }
 }

@@ -1,6 +1,7 @@
-import avatarImage from '../assets/avatar.webp'
-import notesImage from '../assets/taking-notes.webp'
-import yesImage from '../assets/yes.webp'
+// Sized for the panel (2x the displayed size). The larger originals are for the website.
+import avatarImage from '../assets/ui/avatar.webp'
+import notesImage from '../assets/ui/notes.webp'
+import yesImage from '../assets/ui/yes.webp'
 import { diffWords } from '../diff.js'
 import { withText } from '../anchor.js'
 import { currentPage, type Editor } from '../editor.js'
