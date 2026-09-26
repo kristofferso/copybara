@@ -16,13 +16,13 @@
   ],
   "license": "MIT",
   "author": "Kristoffer <kristoffer@tataki.no>",
-  "homepage": "https://github.com/tatakias/copybara#readme",
+  "homepage": "https://github.com/tataki-no/copybara#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tatakias/copybara.git"
+    "url": "git+https://github.com/tataki-no/copybara.git"
   },
   "bugs": {
-    "url": "https://github.com/tatakias/copybara/issues"
+    "url": "https://github.com/tataki-no/copybara/issues"
   },
   "type": "module",
   "sideEffects": [
