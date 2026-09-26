@@ -17,8 +17,6 @@
   <a href="https://github.com/kristofferso/copybara/actions/workflows/ci.yml"><img src="https://github.com/kristofferso/copybara/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 </p>
 
-<img src="https://raw.githubusercontent.com/kristofferso/copybara/main/src/assets/taking-notes.webp" alt="A capybara taking notes" width="150" align="right">
-
 Reviewing website copy usually means screenshots, spreadsheets and Slack threads. With Copybara, reviewers click the text and change it. Every change lands in one structured list that you hand to an agent.
 
 - **Edit in place.** Turn Copybara on, click a heading, button or paragraph and type. Press Enter to save.
