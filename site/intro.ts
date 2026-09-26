@@ -122,5 +122,4 @@ export const playIntro = async () => {
 
   root.classList.remove('intro')
   steps.forEach(el => el.removeAttribute('style'))
-  em.parentElement!.style.minHeight = ''
 }

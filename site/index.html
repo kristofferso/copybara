@@ -82,14 +82,11 @@
             if (edited || matchMedia('(prefers-reduced-motion: reduce)').matches) return
             var em = document.querySelector('.hero h1 em')
             var final = em.textContent
-            // Hold the headline at its final height so nothing below it moves while it is rewritten.
-            em.parentNode.style.minHeight = em.parentNode.offsetHeight + 'px'
             em.textContent = 'right in place.'
             document.documentElement.classList.add('intro')
             // Safety net if the animation never runs.
             window.__introFallback = setTimeout(function () {
               em.textContent = final
-              em.parentNode.style.minHeight = ''
               document.documentElement.classList.remove('intro')
             }, 6000)
           } catch (e) {}
