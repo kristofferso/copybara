@@ -6,12 +6,15 @@
 
 <p align="center">
   Edit your copy right where it is, then hand every change to your coding agent as one ready-made prompt.
+  <br>
+  <a href="https://copybara.ink"><strong>copybara.ink</strong></a>: try it live on the landing page.
 </p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/copybara"><img src="https://img.shields.io/npm/v/copybara?color=e5482a" alt="npm version"></a>
   <a href="https://bundlephobia.com/package/copybara"><img src="https://img.shields.io/bundlephobia/minzip/copybara?label=gzip" alt="bundle size"></a>
   <a href="./LICENSE"><img src="https://img.shields.io/npm/l/copybara" alt="MIT license"></a>
+  <a href="https://github.com/kristofferso/copybara/actions/workflows/ci.yml"><img src="https://github.com/kristofferso/copybara/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 </p>
 
 <img src="https://raw.githubusercontent.com/kristofferso/copybara/main/src/assets/taking-notes.webp" alt="A capybara taking notes" width="150" align="right">

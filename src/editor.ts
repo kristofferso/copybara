@@ -1,6 +1,6 @@
-import { applyHTML, describe, hasOwnText, readText, resolve } from './anchor'
-import { newId, type Store } from './store'
-import type { Change, Mode, Page, Target } from './types'
+import { applyHTML, describe, hasOwnText, readText, resolve } from './anchor.js'
+import { newId, type Store } from './store.js'
+import type { Change, Mode, Page, Target } from './types.js'
 
 export const currentPage = (): Page => ({
   path: location.pathname,

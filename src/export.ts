@@ -1,5 +1,5 @@
-import { diffWords } from './diff'
-import type { Change, CodebaseIntel, Page } from './types'
+import { diffWords } from './diff.js'
+import type { Change, CodebaseIntel, Page } from './types.js'
 
 export type PageGroup = { page: Page; changes: Change[] }
 

@@ -1,4 +1,4 @@
-import type { Target } from './types'
+import type { Target } from './types.js'
 
 const SKIP = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE', 'SVG', 'COPYBARA-UI'])
 const BLOCK = new Set([

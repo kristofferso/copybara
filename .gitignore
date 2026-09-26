@@ -3,3 +3,5 @@ dist
 site/dist
 *.tgz
 .DS_Store
+.vercel
+.env*

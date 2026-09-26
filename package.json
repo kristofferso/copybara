@@ -16,7 +16,7 @@
   ],
   "license": "MIT",
   "author": "Kristoffer <kristoffer@tataki.no>",
-  "homepage": "https://github.com/kristofferso/copybara#readme",
+  "homepage": "https://copybara.ink",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kristofferso/copybara.git"
@@ -25,9 +25,7 @@
     "url": "https://github.com/kristofferso/copybara/issues"
   },
   "type": "module",
-  "sideEffects": [
-    "./dist/copybara.global.js"
-  ],
+  "sideEffects": false,
   "files": [
     "dist",
     "README.md",
@@ -44,8 +42,14 @@
       "types": "./dist/react.d.ts",
       "import": "./dist/react.js"
     },
-    "./global": "./dist/copybara.global.js",
     "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "react": [
+        "./dist/react.d.ts"
+      ]
+    }
   },
   "unpkg": "./dist/copybara.global.js",
   "jsdelivr": "./dist/copybara.global.js",

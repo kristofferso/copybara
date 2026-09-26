@@ -1,4 +1,4 @@
-import type { Change } from './types'
+import type { Change } from './types.js'
 
 type Listener = (changes: Change[]) => void
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import type { CopybaraConfig } from './types'
+import type { CopybaraConfig } from './types.js'
 
 export type CopybaraProps = CopybaraConfig
 

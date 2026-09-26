@@ -1,7 +1,7 @@
 // Entry for <script src=".../copybara.global.js">. Configure with data-* attributes on the tag,
 // or with `window.copybaraConfig = {...}` set before the script loads.
-import { destroy, init, toMarkdown, toPrompt } from './index'
-import type { CopybaraConfig } from './types'
+import { destroy, init, toMarkdown, toPrompt } from './index.js'
+import type { CopybaraConfig } from './types.js'
 
 declare global {
   interface Window {
