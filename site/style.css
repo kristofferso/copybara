@@ -62,7 +62,7 @@ section h2 { font-size: clamp(34px, 4.2vw, 50px); line-height: 1.08; max-width: 
 .button:hover { background: var(--surface-2); }
 .button.primary { border-color: var(--ink); background: var(--ink); color: #fff; }
 .button.primary:hover { background: #3a332b; }
-.button svg { width: 16px; height: 16px; margin-left: 6px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.button svg { width: 16px; height: 16px; margin-right: 8px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
 /* Toggle buttons: labels follow Copybara's own state attribute. */
 html[data-copybara-mode] .when-off, html:not([data-copybara-mode]) .when-on { display: none; }
