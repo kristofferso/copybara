@@ -1,0 +1,75 @@
+{
+  "name": "copybara",
+  "version": "0.1.0",
+  "description": "Edit the text on your website in place, then hand the changes to your coding agent as a ready-made prompt.",
+  "keywords": [
+    "copy",
+    "copywriting",
+    "cms",
+    "content",
+    "editor",
+    "inline-editing",
+    "prompt",
+    "ai",
+    "agent",
+    "react"
+  ],
+  "license": "MIT",
+  "author": "Kristoffer <kristoffer@tataki.no>",
+  "homepage": "https://github.com/tatakias/copybara#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tatakias/copybara.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tatakias/copybara/issues"
+  },
+  "type": "module",
+  "sideEffects": [
+    "./dist/copybara.global.js"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
+    },
+    "./global": "./dist/copybara.global.js",
+    "./package.json": "./package.json"
+  },
+  "unpkg": "./dist/copybara.global.js",
+  "jsdelivr": "./dist/copybara.global.js",
+  "scripts": {
+    "dev": "bun --hot site/index.html",
+    "build": "bun run build.ts",
+    "build:site": "bun build site/index.html --outdir site/dist --minify",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run typecheck && bun test && bun run build"
+  },
+  "peerDependencies": {
+    "react": ""
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@happy-dom/global-registrator": "^20.14.5",
+    "@types/bun": "^1.4.2",
+    "@types/react": "^19.3.0",
+    "motion": "^13.4.0",
+    "typescript": "^7.0.2"
+  }
+}

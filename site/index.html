@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Copybara: edit your copy right where it is</title>
+    <meta name="description" content="Review the text on your website by clicking it. Rewrites and notes land in one structured list, ready for your coding agent." />
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,50..100;1,9..144,300..700,50..100&family=Caveat:wght@600&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="nav" data-copybara-ignore>
+      <a class="logo" href="/"><img src="../src/assets/avatar.webp" alt="" /> Copybara</a>
+      <nav>
+        <a href="#how">How it works</a>
+        <a href="#install">Install</a>
+        <a class="gh" href="https://github.com/tatakias/copybara" data-github>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          GitHub
+          <span class="stars" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 .75l2.2 4.6 5.05.62-3.72 3.47.95 5-4.48-2.47-4.48 2.47.95-5L.75 5.97l5.05-.62z"/></svg><span data-stars></span></span>
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <h1>Edit your copy <em>right where it is.</em></h1>
+          <p class="lede">
+            Copybara lets anyone review the text on your website by clicking it. Rewrites and notes land in one structured
+            list, ready for your coding agent. No more spreadsheets, screenshots and Slack threads.
+          </p>
+          <div class="cta">
+            <button class="button primary" data-toggle data-copybara-ignore>
+              <span class="when-off">Try it out</span><span class="when-on">Stop editing</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 8v9H8" /></svg>
+            </button>
+            <div class="install-chip">
+              <select data-pm-select aria-label="Package manager">
+                <option value="bun">bun</option>
+                <option value="npm">npm</option>
+                <option value="pnpm">pnpm</option>
+                <option value="yarn">yarn</option>
+              </select>
+              <code data-pm-args>add copybara</code>
+              <button class="copy-button" data-copy-install aria-label="Copy install command">
+                <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V6a2 2 0 0 1 2-2h8" /></svg>
+              <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <figure class="notebook" data-copybara-ignore aria-label="A notebook page with drafts of this page's headline">
+          <div class="cover">
+            <div class="page">
+              <p class="page-head" data-step><span>Homepage headline</span><span>p. 4</span></p>
+              <p class="draft" data-step>Edit your copy</p>
+              <p class="draft"><del data-step="old">right in place.<svg class="strike" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true"><path d="M1 8.5C28 7 60 6.5 99 4.5" /></svg></del></p>
+              <p class="draft final" data-step="new">right where it is.<svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13c3 2 5 4 6 6 3-6 7-11 12-15" /></svg></p>
+              <p class="margin-note" data-step>
+                <svg class="note-arrow" viewBox="0 0 40 40" aria-hidden="true"><path d="M10 36C5 24 10 12 26 7" /><path d="M19 3l8 4-5 7" /></svg>
+                Plainer. Say where, not how.
+              </p>
+            </div>
+            <span class="band" aria-hidden="true"></span>
+          </div>
+          <svg class="ribbon" viewBox="0 0 24 64" aria-hidden="true"><path d="M3 0c.6 14-.8 30 .4 44-.2 5 .1 10 .3 16.5l8.6-8.2 8.3 9c.4-8-.6-15 .2-24.5.5-12-.4-24 .4-36.8" /><path class="fold" d="M8 6c.3 10-.4 22 .2 34" /></svg>
+        </figure>
+      </section>
+      <script>
+        // Sets up the intro animation's starting point before first paint. site/intro.ts plays it.
+        // Skipped for reduced motion, or when the visitor has saved their own edit of the headline.
+        ;(function () {
+          try {
+            var saved = JSON.parse(localStorage.getItem('copybara') || '{}').changes || []
+            var edited = saved.some(function (c) {
+              return c.page.path === location.pathname && (c.target.tag === 'h1' || c.target.tag === 'em')
+            })
+            if (edited || matchMedia('(prefers-reduced-motion: reduce)').matches) return
+            var em = document.querySelector('.hero h1 em')
+            var final = em.textContent
+            // Hold the headline at its final height so nothing below it moves while it is rewritten.
+            em.parentNode.style.minHeight = em.parentNode.offsetHeight + 'px'
+            em.textContent = 'right in place.'
+            document.documentElement.classList.add('intro')
+            // Safety net if the animation never runs.
+            window.__introFallback = setTimeout(function () {
+              em.textContent = final
+              em.parentNode.style.minHeight = ''
+              document.documentElement.classList.remove('intro')
+            }, 6000)
+          } catch (e) {}
+        })()
+      </script>
+
+      <section class="compare" id="how">
+        <h2>Copy feedback without <em>the back-and-forth.</em></h2>
+        <div class="columns">
+          <div class="column before">
+            <h3>Today</h3>
+            <ul>
+              <li>Screenshots with red circles on them</li>
+              <li>A spreadsheet with “old text” and “new text” columns</li>
+              <li>Slack threads about “the second button on the pricing page”</li>
+              <li>A developer hunting down every string by hand</li>
+            </ul>
+          </div>
+          <div class="column after">
+            <h3>With Copybara</h3>
+            <ul>
+              <li>Click the text and type the new version</li>
+              <li>Notes pinned to the exact element they are about</li>
+              <li>One structured list of changes per page</li>
+              <li>A prompt your agent can act on right away</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="steps">
+        <article>
+          <svg class="doodle" viewBox="0 0 200 110" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 84c14-2 22-16 36-12 12 4 4 20-6 16-10-5 4-26 22-22 16 3 14 22 30 20 12-1 16-12 26-16" /><path d="M128 70l8-3 44-44a5 5 0 0 0-7-7l-44 44z" /><path d="M167 26l7 7" /><text x="30" y="40">fixed it!</text></svg>
+          <h3><span class="num">1</span> Edit</h3>
+          <p>Turn Copybara on and click a heading, a button or a paragraph. Type the new text and press Enter.</p>
+        </article>
+        <article>
+          <svg class="doodle" viewBox="0 0 200 110" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M44 20c34-9 96-10 114 10 16 18 4 40-30 44-14 2-26 1-36 0l-26 22 6-24c-26-4-42-16-40-32 1-9 5-16 12-20z" /><text x="58" y="54">shorter?</text></svg>
+          <h3><span class="num">2</span> Comment</h3>
+          <p>Switch to Comment to flag an image, a section or a sentence you want someone else to look at.</p>
+        </article>
+        <article>
+          <svg class="doodle" viewBox="0 0 200 110" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 94c26 2 40-18 58-20 16-2 18 16 4 18-16 2-6-26 26-34" stroke-dasharray="1 8" /><path d="M118 52l68-30-34 58-10-18z" /><path d="M186 22l-44 40" /><path d="M142 62l-2 14 12-4" /><text x="24" y="40">off it goes</text></svg>
+          <h3><span class="num">3</span> Hand off</h3>
+          <p>Copy everything as one prompt for Claude Code, Cursor or any agent. It says what to change and where to look.</p>
+        </article>
+      </section>
+
+      <section class="try" id="try">
+        <h2>Try it on <em>this page.</em></h2>
+        <p class="section-lede">
+          Turn Copybara on with the button in the corner and change anything you like, this sentence included. The prompt
+          below updates as you go, and nothing leaves your browser.
+        </p>
+        <div class="preview-wrap">
+        <p class="hand-note" aria-hidden="true">
+          off limits, thanks to <code>data-copybara-ignore</code>
+          <svg viewBox="0 0 40 40"><path d="M36 8C20 7 9 14 8 33M3 27l5 7 6-6" /></svg>
+        </p>
+        <aside class="preview" data-copybara-ignore>
+          <div class="preview-head">
+            <h3>What your agent receives</h3>
+            <button class="preview-start" data-toggle>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z" /><path d="M13.5 6.5l4 4" /></svg>
+              <span class="when-off">Start editing</span><span class="when-on">Stop editing</span>
+            </button>
+            <div class="tabs" role="tablist">
+              <button role="tab" data-format="markdown" aria-selected="true">Markdown</button>
+              <button role="tab" data-format="prompt" aria-selected="false">Prompt</button>
+            </div>
+          </div>
+          <pre class="sheet" data-preview></pre>
+        </aside>
+        </div>
+      </section>
+
+      <section class="destinations">
+        <h2>Where your changes <em>go.</em></h2>
+        <p class="section-lede">Today you copy them out. With Copybara Pro they go straight to where the work happens.</p>
+        <div class="dest-layout">
+          <div class="dest-now">
+            <p class="dest-label">Available now</p>
+            <div class="dest-row"><span class="dest-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg></span><div><h3>Prompt</h3><p>Paste into Claude Code, Cursor or any coding agent.</p></div></div>
+            <div class="dest-row"><span class="dest-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg></span><div><h3>Markdown</h3><p>A readable changelog for an issue, a doc or a chat.</p></div></div>
+          </div>
+          <div class="dest-pro">
+            <p class="dest-label">Copybara Pro <span>Coming soon</span></p>
+            <div class="dest-row"><span class="dest-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="18" r="3" /><circle cx="6" cy="6" r="3" /><path d="M13 6h3a2 2 0 0 1 2 2v7" /><line x1="6" x2="6" y1="9" y2="21" /></svg></span><div><h3>Pull request</h3><p>Our agent finds each string, makes the change and opens a PR.</p></div></div>
+            <div class="dest-row"><span class="dest-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.886 4.18A11.982 11.982 0 0 1 11.99 0C18.624 0 24 5.376 24 12.009c0 3.64-1.62 6.903-4.18 9.105L2.887 4.18ZM1.817 5.626l16.556 16.556c-.524.33-1.075.62-1.65.866L.951 7.277c.247-.575.537-1.126.866-1.65ZM.322 9.163l14.515 14.515c-.71.172-1.443.282-2.195.322L0 11.358a12 12 0 0 1 .322-2.195Zm-.17 4.862 9.823 9.824a12.02 12.02 0 0 1-9.824-9.824Z"/></svg></span><div><h3>Linear</h3><p>Every review becomes a ticket with the full change list.</p></div></div>
+            <div class="dest-row"><span class="dest-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.571 11.513H0a5.218 5.218 0 0 0 5.232 5.215h2.13v2.057A5.215 5.215 0 0 0 12.575 24V12.518a1.005 1.005 0 0 0-1.005-1.005zm5.723-5.756H5.736a5.215 5.215 0 0 0 5.215 5.214h2.129v2.058a5.218 5.218 0 0 0 5.215 5.214V6.758a1.001 1.001 0 0 0-1.001-1.001zM23.013 0H11.455a5.215 5.215 0 0 0 5.215 5.215h2.129v2.057A5.215 5.215 0 0 0 24 12.483V1.005A1.001 1.001 0 0 0 23.013 0Z"/></svg></span><div><h3>Jira</h3><p>Same list, delivered to the board your team already uses.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="install" id="install">
+        <h2>Install in a minute.</h2>
+        <p class="section-lede">No dependencies, about 15 kB gzipped.</p>
+
+        <div class="code-card">
+          <div class="tabs" role="tablist" data-install-tabs>
+            <button role="tab" data-tab="react" aria-selected="true">React</button>
+            <button role="tab" data-tab="script" aria-selected="false">Script tag</button>
+            <button role="tab" data-tab="js" aria-selected="false">JavaScript</button>
+          </div>
+          <div class="tab-panel" data-panel="react">
+            <div class="pm-install">
+              <div class="pm-tabs" role="tablist" aria-label="Package manager">
+                <button role="tab" data-pm="bun" aria-selected="true">bun</button>
+                <button role="tab" data-pm="npm" aria-selected="false">npm</button>
+                <button role="tab" data-pm="pnpm" aria-selected="false">pnpm</button>
+                <button role="tab" data-pm="yarn" aria-selected="false">yarn</button>
+              </div>
+              <div class="pm-line">
+                <code><span class="c">$</span> <span data-pm-command>bun add copybara</span></code>
+                <button class="copy-button" data-copy-install aria-label="Copy install command">
+                  <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V6a2 2 0 0 1 2-2h8" /></svg>
+              <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+                </button>
+              </div>
+            </div>
+            <pre><code><span class="c">// app/layout.tsx</span>
+<span class="k">import</span> { Copybara } <span class="k">from</span> <span class="s">'copybara/react'</span>
+
+&lt;<span class="t">Copybara</span> enabled={process.env.NODE_ENV !== <span class="s">'production'</span>} /&gt;</code></pre>
+            <p class="note">The core is loaded only when <code>enabled</code> is true, so production visitors never download it.</p>
+          </div>
+          <div class="tab-panel" data-panel="script" hidden>
+            <pre><code>&lt;<span class="t">script</span>
+  src=<span class="s">"https://cdn.jsdelivr.net/npm/copybara/dist/copybara.global.js"</span>
+  data-position=<span class="s">"bottom-right"</span>
+&gt;&lt;/<span class="t">script</span>&gt;</code></pre>
+            <p class="note">Works on any site. Set <code>window.copybaraConfig</code> before the tag for the full config.</p>
+          </div>
+          <div class="tab-panel" data-panel="js" hidden>
+            <div class="pm-install">
+              <div class="pm-tabs" role="tablist" aria-label="Package manager">
+                <button role="tab" data-pm="bun" aria-selected="true">bun</button>
+                <button role="tab" data-pm="npm" aria-selected="false">npm</button>
+                <button role="tab" data-pm="pnpm" aria-selected="false">pnpm</button>
+                <button role="tab" data-pm="yarn" aria-selected="false">yarn</button>
+              </div>
+              <div class="pm-line">
+                <code><span class="c">$</span> <span data-pm-command>bun add copybara</span></code>
+                <button class="copy-button" data-copy-install aria-label="Copy install command">
+                  <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V6a2 2 0 0 1 2-2h8" /></svg>
+              <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+                </button>
+              </div>
+            </div>
+            <pre><code><span class="k">import</span> { init } <span class="k">from</span> <span class="s">'copybara'</span>
+
+<span class="k">const</span> copybara = init({ position: <span class="s">'bottom-right'</span> })</code></pre>
+            <p class="note">Returns <code>open()</code>, <code>close()</code>, <code>setMode()</code> and <code>destroy()</code>.</p>
+          </div>
+        </div>
+
+        <div class="config">
+          <div class="config-text">
+            <h3>Tell the agent about your codebase</h3>
+            <p>Say where copy lives and how your team writes. The prompt gets sharper and the agent stops guessing.</p>
+          </div>
+          <div class="code-card">
+            <pre><code>&lt;<span class="t">Copybara</span>
+  instructions=<span class="s">"Use sentence case."</span>
+  codebase={{
+    framework: <span class="s">'Next.js with next-intl'</span>,
+    textSources: [<span class="s">'messages/{locale}.json'</span>],
+    notes: <span class="s">'Marketing copy lives in Sanity.'</span>,
+  }}
+/&gt;</code></pre>
+          </div>
+        </div>
+
+        <table class="options">
+          <thead>
+            <tr><th>Option</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>enabled</code></td><td><code>true</code></td><td>Render nothing when false.</td></tr>
+            <tr><td><code>position</code></td><td><code>'bottom-left'</code></td><td>Or <code>'bottom-right'</code>.</td></tr>
+            <tr><td><code>theme</code></td><td><code>'auto'</code></td><td>Or <code>'light'</code> and <code>'dark'</code>.</td></tr>
+            <tr><td><code>instructions</code></td><td></td><td>Extra instructions added to the prompt.</td></tr>
+            <tr><td><code>codebase</code></td><td></td><td><code>framework</code>, <code>textSources</code> and <code>notes</code>.</td></tr>
+            <tr><td><code>ignore</code></td><td></td><td>Selector for elements to leave alone. <code>data-copybara-ignore</code> always works.</td></tr>
+            <tr><td><code>storageKey</code></td><td><code>'copybara'</code></td><td>localStorage key for saved changes.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="soon">
+        <div>
+          <p class="soon-label">Copybara Pro, coming soon</p>
+          <h2>Get a pull request, <em>not a to-do list.</em></h2>
+          <p>
+            Connect your repository, press Send, and review a finished pull request. Or get the changes as a ticket in
+            Linear or Jira. Reviewers sign in, so every change has a name on it.
+          </p>
+          <a class="button" href="https://github.com/tatakias/copybara">Follow along on GitHub</a>
+        </div>
+        <img src="../src/assets/yes.webp" alt="A happy capybara" />
+      </section>
+    </main>
+
+    <footer class="foot" data-copybara-ignore>
+      <p>Made by <a href="https://tataki.no">Tataki Digital AS</a> in Norway. Copybara is MIT licensed.</p>
+    </footer>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
