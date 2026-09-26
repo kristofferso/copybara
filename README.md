@@ -1,6 +1,20 @@
-# Copybara
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kristofferso/copybara/main/src/assets/avatar.webp" alt="" width="96" height="96">
+</p>
 
-Edit the text on your website where it lives, then hand every change to your coding agent as one ready-made prompt.
+<h1 align="center">Copybara</h1>
+
+<p align="center">
+  Edit your copy right where it is, then hand every change to your coding agent as one ready-made prompt.
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/copybara"><img src="https://img.shields.io/npm/v/copybara?color=e5482a" alt="npm version"></a>
+  <a href="https://bundlephobia.com/package/copybara"><img src="https://img.shields.io/bundlephobia/minzip/copybara?label=gzip" alt="bundle size"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/npm/l/copybara" alt="MIT license"></a>
+</p>
+
+<img src="https://raw.githubusercontent.com/kristofferso/copybara/main/src/assets/taking-notes.webp" alt="A capybara taking notes" width="150" align="right">
 
 Reviewing website copy usually means screenshots, spreadsheets and Slack threads. With Copybara, reviewers click the text and change it. Every change lands in one structured list that you hand to an agent.
 
