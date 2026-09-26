@@ -62,7 +62,7 @@
     "prepublishOnly": "bun run typecheck && bun test && bun run build"
   },
   "peerDependencies": {
-    "react": ""
+    "react": ">=18"
   },
   "peerDependenciesMeta": {
     "react": {
