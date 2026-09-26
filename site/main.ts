@@ -1,7 +1,7 @@
 import { init, toMarkdown, toPrompt, type Change, type CopybaraConfig } from '../src/index'
 import { playIntro } from './intro'
 
-const REPO = 'tataki-no/copybara'
+const REPO = 'kristofferso/copybara'
 
 const config: CopybaraConfig = {
   position: 'bottom-right',
