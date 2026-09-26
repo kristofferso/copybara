@@ -88,6 +88,7 @@ export const createUi = ({ host, store, editor, config }: UiOptions) => {
   let noteTarget: HTMLElement | null = null
   let toastTimer: ReturnType<typeof setTimeout> | undefined
   let dirty = false
+  let destroyed = false
 
   const shadow = host.attachShadow({ mode: 'open' })
   const panel = h('section', { class: 'panel', role: 'dialog', 'aria-label': 'Copybara' })
@@ -355,6 +356,8 @@ export const createUi = ({ host, store, editor, config }: UiOptions) => {
   }
 
   function render() {
+    // Deferred renders (focusout, microtasks) can land after destroy().
+    if (destroyed) return
     // Never rebuild under a field the reviewer is typing in; catch up when it loses focus.
     if (shadow.activeElement instanceof HTMLTextAreaElement) {
       dirty = true
@@ -524,6 +527,7 @@ export const createUi = ({ host, store, editor, config }: UiOptions) => {
     open: () => setOpen(true),
     close: () => setOpen(false),
     destroy() {
+      destroyed = true
       unsubscribe()
       clearTimeout(toastTimer)
       clearTimeout(confirmTimer)
