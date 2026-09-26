@@ -1,6 +1,6 @@
 {
   "name": "copybara",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Edit the text on your website in place, then hand the changes to your coding agent as a ready-made prompt.",
   "keywords": [
     "copy",
