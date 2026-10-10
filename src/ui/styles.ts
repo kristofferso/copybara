@@ -65,7 +65,10 @@ export const css: string = `
   text-align: left;
   letter-spacing: normal;
 }
-.root[data-pos="bottom-right"] { left: auto; right: 16px; align-items: flex-end; }
+.root[data-pos$="right"] { left: auto; right: 16px; align-items: flex-end; }
+/* At the top the launcher comes first and the panel opens below it. */
+.root[data-pos^="top"] { bottom: auto; top: 16px; flex-direction: column-reverse; }
+.root[data-dragging] .launcher { cursor: grabbing; transform: none; transition: none; }
 .root[data-theme="dark"] { ${DARK} }
 @media (prefers-color-scheme: dark) { .root[data-theme="auto"] { ${DARK} } }
 
@@ -100,6 +103,10 @@ code { font-family: var(--mono); }
   font-weight: 600;
   font-size: 13.5px;
   transition: transform .15s var(--ease);
+  /* It can be dragged: no scrolling or text selection on the way. */
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .launcher:hover { transform: translateY(-1px); }
 .launcher:active { transform: none; }
@@ -143,6 +150,9 @@ code { font-family: var(--mono); }
   transition: opacity .16s, transform .2s var(--ease), visibility 0s;
 }
 .root[data-pos="bottom-right"] .panel { transform-origin: bottom right; }
+.root[data-pos="top-left"] .panel { transform-origin: top left; }
+.root[data-pos="top-right"] .panel { transform-origin: top right; }
+.root[data-pos^="top"] .panel:not([data-open]) { transform: translateY(-8px) scale(.97); }
 .panel:not([data-open]) {
   opacity: 0;
   visibility: hidden;
@@ -194,6 +204,7 @@ code { font-family: var(--mono); }
 .icon-btn:hover { background: var(--bg-2); color: var(--ink); }
 
 .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 0 14px; }
+.tools + .list { margin-top: 12px; }
 .tool {
   display: flex;
   align-items: center;
@@ -209,7 +220,6 @@ code { font-family: var(--mono); }
 .tool[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent-ink); box-shadow: inset 0 0 0 1.5px var(--accent); }
 .tool[data-tool="comment"][aria-pressed="true"] { background: var(--note-bg); color: var(--note); box-shadow: inset 0 0 0 1.5px var(--note); }
 
-.hint { margin: 10px 16px 12px; color: var(--muted); font-size: 12.5px; }
 kbd {
   display: inline-block;
   padding: 0 5px;
@@ -327,9 +337,34 @@ textarea.note:focus { box-shadow: inset 0 0 0 1.5px var(--note); }
 textarea::placeholder { color: var(--faint); }
 .add-note { margin-top: 4px; padding: 2px 0; color: var(--faint); font-size: 12px; }
 .add-note:hover { color: var(--note); }
-.clear { display: block; margin: 14px auto 0; padding: 4px 8px; border-radius: 6px; color: var(--faint); font-size: 12px; }
-.clear:hover { color: var(--ink); background: var(--bg-2); }
-.clear.danger { color: var(--del); background: var(--del-bg); font-weight: 600; }
+.menu { position: relative; }
+.menu > .icon-btn[aria-expanded="true"] { background: var(--bg-2); color: var(--ink); }
+.menu[data-menu="clear"] > .icon-btn[aria-expanded="true"] { background: var(--del-bg); color: var(--del); }
+/* Fixed, so the panel's rounded clipping doesn't cut it off. Placed by placeMenu(). */
+.menu-pop {
+  position: fixed;
+  z-index: 1;
+  width: 260px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--bg);
+  box-shadow: var(--shadow), 0 0 0 1px var(--line);
+  color: var(--muted);
+  font-size: 12.5px;
+  animation: pop-in .16s var(--ease);
+}
+.menu-pop p { margin: 0; }
+.menu-pop .menu-title { margin-bottom: 2px; color: var(--ink); font-size: 13.5px; font-weight: 600; }
+.menu-pop .pop-actions { justify-content: flex-end; }
+.keys-pop { width: 290px; }
+.keys-pop .menu-sub { margin: 12px 0 4px; color: var(--faint); font-size: 11.5px; font-weight: 600; }
+.keys-pop ul { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.keys-pop .menu-sub + ul { margin-top: 0; }
+.keys-pop li { display: grid; grid-template-columns: 96px 1fr; align-items: center; gap: 10px; }
+.keys-pop .keys { display: inline-flex; gap: 3px; color: var(--ink); font-size: 12px; font-weight: 500; }
+.keys-pop kbd { background: var(--bg-2); }
+.btn.danger { background: var(--del); color: var(--bg); box-shadow: none; }
+.btn.danger:not(:disabled):hover { background: color-mix(in srgb, var(--del) 85%, #000); }
 
 .empty { display: flex; align-items: flex-end; gap: 8px; padding: 16px 4px 0; }
 .empty-text { flex: 1; padding-bottom: 20px; }
@@ -433,7 +468,9 @@ textarea::placeholder { color: var(--faint); }
 .toast span { color: var(--muted); font-size: 12.5px; }
 
 @media (max-width: 480px) {
-  .root { left: 12px; right: 12px; bottom: 12px; }
+  .root[data-pos] { left: 12px; right: 12px; }
+  .root[data-pos^="bottom"] { bottom: 12px; }
+  .root[data-pos^="top"] { top: 12px; }
   .panel { width: 100%; max-width: none; }
 }
 

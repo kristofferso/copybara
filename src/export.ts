@@ -70,15 +70,27 @@ const codebaseSection = (codebase?: CodebaseIntel) => {
   return lines.length ? `## About this codebase\n\n${lines.join('\n')}\n\n` : ''
 }
 
-const HOW_TO = `## How to apply
+/** The steps the agent needs, leaving out what doesn't apply: a review can be all notes. */
+const howTo = (edits: boolean, notes: boolean) => {
+  const steps = [
+    `Find where each element is defined: components, templates, translation (i18n) files, Markdown/MDX, CMS seed data or config. Search for the exact text first, then for a distinctive fragment. Rendered text can be split across elements, built from variables, or differ from the source in whitespace and letter case.${notes ? ' For images and video, search for the file name.' : ''}`,
+    edits && 'Change only the wording. Keep markup, styling, links, variables and placeholders intact unless a note asks for more.',
+    notes &&
+      'Notes are requests about one element and can go beyond wording. Do what each note asks and leave the rest alone. If a note is a question or open-ended, answer it or propose a change instead of guessing.',
+    'For localized text, update the locale given for the page and list other locales that need the same change. Do not invent translations.',
+    'If the text is used in several places, change the one on the listed page unless it is clearly one shared string. Ask when unsure.',
+    'If you cannot find something, say so. Finish with a short summary of what you changed in which file and what is left.',
+  ]
+  return `## How to apply
 
-- For each change, find where the original text is defined: components, templates, translation (i18n) files, Markdown/MDX, CMS seed data or config. Search for the exact original text first. If that finds nothing, search for a distinctive fragment. Rendered text can be split across elements, assembled from variables, or differ from the source in whitespace and letter case (CSS \`text-transform\`).
-- Change only the wording. Keep markup, styling, links, variables and interpolation placeholders intact unless a note asks for more.
-- If the text is localized, update the locale given for the page. Point out other locales that probably need the same change instead of inventing translations.
-- If the same text is used in several places, change the occurrence that belongs to the listed page unless it is clearly one shared string. Ask when it is ambiguous.
-- Notes are requests from the reviewer about that element. A note can come without a text change.
-- Do not guess. If you cannot find something, say so.
-- Finish with a short summary: what you changed in which file, and anything you left unresolved.`
+${steps.filter(Boolean).map(step => `- ${step}`).join('\n')}`
+}
+
+const intro = (edits: boolean, notes: boolean, where: string) => {
+  const did = edits && notes ? 'rewrote some of its text and left notes' : edits ? 'rewrote some of its text' : 'left notes on it'
+  const ask = edits ? 'Apply the changes to the source code.' : 'Make the changes they ask for in the source code.'
+  return `Someone reviewed the live website${where} with Copybara and ${did}. ${ask}`
+}
 
 export type ExportOptions = {
   origin?: string
@@ -88,9 +100,11 @@ export type ExportOptions = {
 
 export const toPrompt = (changes: Change[], options: ExportOptions = {}): string => {
   const where = options.origin ? ` at ${options.origin}` : ''
-  let out = `# Copy changes\n\n`
-  out += `Someone reviewed the text on the live website${where} and made the edits below with Copybara. Apply them to the source code. (${summary(changes)}.)\n\n`
-  out += `${HOW_TO}\n\n`
+  const edits = changes.some(c => c.edit)
+  const notes = changes.some(c => c.comment?.trim())
+  let out = `# ${edits ? 'Copy changes' : 'Review notes'}\n\n`
+  out += `${intro(edits, notes, where)} (${summary(changes)}.)\n\n`
+  out += `${howTo(edits, notes)}\n\n`
   out += codebaseSection(options.codebase)
   if (options.instructions?.trim()) out += `## Project instructions\n\n${options.instructions.trim()}\n\n`
   out += `## Changes\n`

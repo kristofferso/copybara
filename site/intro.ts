@@ -6,7 +6,7 @@ declare global {
   }
 }
 
-const FINAL = 'right where it is.'
+const FINAL = 'where you read it.'
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 /** Draws each path of an SVG in turn, like a pen stroke. */
@@ -20,13 +20,15 @@ const draw = async (svg: Element | null, duration: number) => {
   }
 }
 
-/** Reveals text left to right, like it is being written. */
-const write = (el: HTMLElement, duration: number) => {
-  el.style.clipPath = 'inset(-20% 100% -20% 0)'
+/** Writes the text of an element out letter by letter, at the pace of the headline. */
+const type = async (el: HTMLElement) => {
+  const full = el.textContent!.trim()
+  el.textContent = ''
   el.style.opacity = '1'
-  return animate(el, { clipPath: 'inset(-20% 0% -20% 0)' }, { duration, ease: 'easeInOut' }).then(() => {
-    el.style.clipPath = ''
-  })
+  for (let i = 1; i <= full.length; i++) {
+    el.textContent = full.slice(0, i)
+    await sleep(full[i - 1] === ' ' ? 180 : 95 + Math.random() * 70)
+  }
 }
 
 const reveal = (el: HTMLElement, delay = 0) =>
@@ -115,10 +117,8 @@ export const playIntro = async () => {
   moveTo({ x: end.x + 30, y: end.y + 40 }, 0.8)
   animate(cursor, { opacity: 0 }, { duration: 0.6, delay: 0.2 }).then(() => cursor.remove())
   await sleep(500)
-  // The note is handwritten: the text is written out, then the arrow is drawn.
-  const arrow = note.querySelector('.note-arrow')
-  await write(note, 0.9)
-  await draw(arrow, 0.5)
+  // The note is handwritten, one letter at a time.
+  await type(note)
 
   root.classList.remove('intro')
   steps.forEach(el => el.removeAttribute('style'))

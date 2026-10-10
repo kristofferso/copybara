@@ -2,6 +2,7 @@ const PATHS = {
   cursor: '<path d="M5 4l6.5 16 2.2-6.3L20 11.5z"/>',
   pencil: '<path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
   note: '<path d="M20 14.5a2 2 0 0 1-2 2H9l-5 4V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/><path d="M8.5 9h7M8.5 12.5h4"/>',
+  help: '<circle cx="12" cy="12" r="8.5"/><path d="M9.75 9.5a2.3 2.3 0 0 1 4.5.6c0 1.6-2.25 2-2.25 3.4"/><path d="M12 16.6v.1"/>',
   close: '<path d="M17 7L7 17M7 7l10 10"/>',
   trash: '<path d="M4.5 7h15M10 11v5.5M14 11v5.5M6.5 7l.9 12.2a1 1 0 0 0 1 .8h7.2a1 1 0 0 0 1-.8L17.5 7M9.5 7V4.5h5V7"/>',
   target: '<circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="1.6"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"/>',

@@ -1,8 +1,10 @@
+export type Corner = 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right'
+
 export type CopybaraConfig = {
   /** Set to false to render nothing. Defaults to true. */
   enabled?: boolean
-  /** Corner for the launcher button. Defaults to 'bottom-left'. */
-  position?: 'bottom-left' | 'bottom-right'
+  /** Corner for the launcher button. Defaults to 'bottom-left'. Reviewers can drag it to another. */
+  position?: Corner
   /** Defaults to 'auto', which follows the visitor's system setting. */
   theme?: 'auto' | 'light' | 'dark'
   /** Extra instructions added to the generated prompt, e.g. team conventions. */
@@ -11,6 +13,11 @@ export type CopybaraConfig = {
   codebase?: CodebaseIntel
   /** CSS selector for elements Copybara must never touch. `[data-copybara-ignore]` always applies. */
   ignore?: string
+  /**
+   * Keyboard shortcut that turns Copybara on or off, e.g. 'alt+c' (the default) or 'mod+shift+e',
+   * where `mod` is ⌘ on a Mac and Ctrl elsewhere. Set to false to turn it off.
+   */
+  shortcut?: string | false
   /** localStorage key for saved changes. Defaults to 'copybara'. */
   storageKey?: string
 }

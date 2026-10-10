@@ -49,6 +49,21 @@ test('prompt includes instructions, codebase intel and every change', () => {
   expect(prompt).toContain('````text\nWe ```really``` care\n````')
 })
 
+test('a review with only notes gets instructions for notes', () => {
+  const prompt = toPrompt([changes[1]!, changes[2]!])
+  expect(prompt).toStartWith('# Review notes')
+  expect(prompt).toContain('left notes on it')
+  expect(prompt).toContain('Notes are requests')
+  expect(prompt).not.toContain('Change only the wording')
+})
+
+test('a review with only edits leaves out the notes guidance', () => {
+  const prompt = toPrompt([changes[0]!])
+  expect(prompt).toStartWith('# Copy changes')
+  expect(prompt).toContain('Change only the wording')
+  expect(prompt).not.toContain('Notes are requests')
+})
+
 test('notes on big containers only carry an excerpt', () => {
   const prompt = toPrompt([change({ comment: 'Too busy', target: { selector: 'section', tag: 'section', text: 'Lorem ipsum. '.repeat(40) } })])
   expect(prompt).toContain('Text (excerpt):')

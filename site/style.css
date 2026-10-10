@@ -179,12 +179,11 @@ html[data-copybara-mode] [data-toggle] svg { display: none; }
 .draft { font: 400 22px/32px var(--display); font-variation-settings: 'SOFT' 100; }
 .draft del { position: relative; padding: 0; background: none; color: #a0968a; text-decoration: none; }
 .draft.final { position: relative; display: inline-block; margin-top: 32px; font-size: 23px; font-weight: 500; color: var(--ink); }
-.strike, .tick, .note-arrow { fill: none; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.strike, .tick { fill: none; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
 .strike { position: absolute; left: -3px; top: 38%; width: calc(100% + 6px); height: 12px; stroke: var(--accent); stroke-width: 2; }
 .strike path { vector-effect: non-scaling-stroke; }
 .tick { position: absolute; right: -32px; top: 2px; width: 24px; height: 24px; stroke: var(--ins); stroke-width: 2.6; }
-.margin-note { position: relative; margin: 44px 0 0 18px; color: var(--note); font: 600 26px/1.05 var(--hand); rotate: -4deg; }
-.note-arrow { position: absolute; left: -26px; top: -30px; width: 30px; height: 30px; stroke: var(--note); stroke-width: 2.2; }
+.margin-note { position: relative; margin: 44px 0 0; transform-origin: left; color: var(--note); font: 600 26px/1.05 var(--hand); rotate: -4deg; }
 .band {
   position: absolute;
   top: -6px;
@@ -211,7 +210,7 @@ html[data-copybara-mode] [data-toggle] svg { display: none; }
 
 /* Intro animation (site/intro.ts) */
 html.intro .notebook [data-step] { opacity: 0; }
-html.intro :is(.strike, .tick, .note-arrow) { visibility: hidden; }
+html.intro :is(.strike, .tick) { visibility: hidden; }
 .ghost-cursor { position: absolute; top: 0; left: 0; z-index: 40; pointer-events: none; opacity: 0; }
 .ghost-cursor svg { display: block; width: 22px; height: 22px; filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.2)); }
 .ghost-label {

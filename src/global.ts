@@ -18,6 +18,7 @@ if (data.position) fromAttributes.position = data.position as CopybaraConfig['po
 if (data.theme) fromAttributes.theme = data.theme as CopybaraConfig['theme']
 if (data.instructions) fromAttributes.instructions = data.instructions
 if (data.ignore) fromAttributes.ignore = data.ignore
+if (data.shortcut) fromAttributes.shortcut = data.shortcut === 'false' ? false : data.shortcut
 if (data.storageKey) fromAttributes.storageKey = data.storageKey
 
 window.Copybara = { init, destroy, toPrompt, toMarkdown }

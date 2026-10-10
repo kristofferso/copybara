@@ -3,7 +3,7 @@ import { createStore } from './store.js'
 import type { CopybaraConfig, CopybaraInstance } from './types.js'
 import { createUi, HOST_TAG, type Ui } from './ui/ui.js'
 
-export type { Change, CodebaseIntel, CopybaraConfig, CopybaraInstance, Mode, Page, Target, TextEdit } from './types.js'
+export type { Change, CodebaseIntel, CopybaraConfig, Corner, CopybaraInstance, Mode, Page, Target, TextEdit } from './types.js'
 export { toMarkdown, toPrompt, type ExportOptions } from './export.js'
 
 const noop: CopybaraInstance = { open() {}, close() {}, setMode() {}, destroy() {} }

@@ -176,3 +176,84 @@ describe('editing in the panel', () => {
     expect(button.textContent).toBe('Save now')
   })
 })
+
+describe('turning on and off', () => {
+  const mode = () => document.documentElement.getAttribute('data-copybara-mode')
+  const launcher = () => document.querySelector('copybara-ui')!.shadowRoot!.querySelector<HTMLButtonElement>('.launcher')!
+  const press = (init: KeyboardEventInit) =>
+    document.body.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, cancelable: true, ...init }))
+
+  test('the shortcut toggles the last tool used', () => {
+    copybara.setMode('comment')
+    press({ key: 'ç', code: 'KeyC', altKey: true })
+    expect(mode()).toBeNull()
+    press({ key: 'ç', code: 'KeyC', altKey: true })
+    expect(mode()).toBe('comment')
+  })
+
+  test('the shortcut can be changed or turned off', () => {
+    copybara.destroy()
+    copybara = init({ shortcut: 'ctrl+shift+e' })
+    press({ key: 'c', code: 'KeyC', altKey: true })
+    expect(mode()).toBeNull()
+    press({ key: 'E', code: 'KeyE', ctrlKey: true, shiftKey: true })
+    expect(mode()).toBe('edit')
+    copybara.setMode('off')
+    copybara.destroy()
+    copybara = init({ shortcut: false })
+    press({ key: 'c', code: 'KeyC', altKey: true })
+    expect(mode()).toBeNull()
+  })
+
+  test('double-clicking the launcher toggles without opening the panel', async () => {
+    launcher().dispatchEvent(new MouseEvent('click', { bubbles: true, detail: 1 }))
+    launcher().dispatchEvent(new MouseEvent('click', { bubbles: true, detail: 2 }))
+    launcher().dispatchEvent(new MouseEvent('dblclick', { bubbles: true, detail: 2 }))
+    await wait(300)
+    expect(mode()).toBe('edit')
+    expect(launcher().getAttribute('aria-expanded')).toBe('false')
+  })
+
+  test('dragging the launcher snaps it to the nearest corner and remembers it', () => {
+    const pointer = (type: string, x: number, y: number) =>
+      new PointerEvent(type, { bubbles: true, composed: true, pointerId: 1, button: 0, clientX: x, clientY: y })
+    launcher().dispatchEvent(pointer('pointerdown', 40, innerHeight - 40))
+    launcher().dispatchEvent(pointer('pointermove', innerWidth - 60, 50))
+    launcher().dispatchEvent(pointer('pointerup', innerWidth - 60, 50))
+    const root = () => document.querySelector('copybara-ui')!.shadowRoot!.querySelector<HTMLElement>('.root')!
+    expect(root().dataset.pos).toBe('top-right')
+    copybara.destroy()
+    copybara = init()
+    expect(root().dataset.pos).toBe('top-right')
+  })
+
+  test('clicking the active tool turns Copybara off', () => {
+    copybara.open()
+    const tool = () => document.querySelector('copybara-ui')!.shadowRoot!.querySelector<HTMLButtonElement>('.tool[data-tool="comment"]')!
+    tool().click()
+    expect(mode()).toBe('comment')
+    tool().click()
+    expect(mode()).toBeNull()
+  })
+
+  test('a single click opens the panel', async () => {
+    launcher().dispatchEvent(new MouseEvent('click', { bubbles: true, detail: 1 }))
+    await wait(300)
+    expect(launcher().getAttribute('aria-expanded')).toBe('true')
+    expect(mode()).toBeNull()
+  })
+})
+
+test('focus and clicks in the UI stay hidden from focus traps on the page', () => {
+  const seen: string[] = []
+  const record = (event: Event) => seen.push(event.type)
+  for (const type of ['focusin', 'pointerdown', 'mousedown']) document.addEventListener(type, record, true)
+  copybara.setMode('comment')
+  document.querySelector('h1')!.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }))
+  const field = document.querySelector('copybara-ui')!.shadowRoot!.querySelector('.popover textarea')!
+  field.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, composed: true }))
+  field.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, composed: true }))
+  field.dispatchEvent(new FocusEvent('focusin', { bubbles: true, composed: true }))
+  for (const type of ['focusin', 'pointerdown', 'mousedown']) document.removeEventListener(type, record, true)
+  expect(seen).toEqual([])
+})

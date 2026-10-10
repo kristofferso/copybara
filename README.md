@@ -50,7 +50,7 @@ The component imports the core lazily, so your bundler puts it in a separate chu
 <script src="https://cdn.jsdelivr.net/npm/copybara/dist/copybara.global.js" data-position="bottom-right"></script>
 ```
 
-Supported attributes: `data-position`, `data-theme`, `data-instructions`, `data-ignore` and `data-storage-key`. For the full config, set `window.copybaraConfig = { ... }` before the script loads. Add `data-manual` to call `Copybara.init()` yourself.
+Supported attributes: `data-position`, `data-theme`, `data-instructions`, `data-ignore`, `data-shortcut` and `data-storage-key`. For the full config, set `window.copybaraConfig = { ... }` before the script loads. Add `data-manual` to call `Copybara.init()` yourself.
 
 ### Plain JavaScript
 
@@ -77,11 +77,12 @@ const copybara = init({ position: 'bottom-right' })
 | Option         | Description                                                                                      |
 | -------------- | ------------------------------------------------------------------------------------------------ |
 | `enabled`      | Render nothing when `false`. Defaults to `true`.                                                 |
-| `position`     | `'bottom-left'` (default) or `'bottom-right'`.                                                   |
+| `position`     | `'bottom-left'` (default), `'bottom-right'`, `'top-left'` or `'top-right'`. Reviewers can also drag the launcher to another corner; that sticks for the browser tab. |
 | `theme`        | `'auto'` (default), `'light'` or `'dark'`.                                                       |
 | `instructions` | Extra instructions added to the prompt.                                                          |
 | `codebase`     | `framework`, `textSources` and `notes`. Tells the agent where text lives, so it doesn't have to guess. |
 | `ignore`       | CSS selector for elements Copybara must never touch. `data-copybara-ignore` always works.         |
+| `shortcut`     | Key that turns Copybara on or off. Defaults to `'alt+c'`. Use `'mod+shift+e'` style, where `mod` is `⌘` on a Mac and `Ctrl` elsewhere, or `false` for none. |
 | `storageKey`   | localStorage key for saved changes. Defaults to `'copybara'`.                                    |
 
 ## Reading and controlling the state
@@ -113,6 +114,8 @@ Give such buttons `data-copybara-ignore` so they keep working while Copybara is 
 | `Shift` + `Enter`     | New line                      |
 | `Esc`                 | Cancel. Press again to turn Copybara off |
 | `⌘`/`Ctrl` + `Enter`  | Save a note                   |
+
+Anywhere on the page, `⌥`/`Alt` + `C` turns Copybara on or off (set `shortcut` to change it). Double-clicking the launcher does the same without opening the panel.
 
 ## Exporting from code
 
