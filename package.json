@@ -59,7 +59,8 @@
     "build:site": "bun build site/index.html --outdir site/dist --minify",
     "test": "bun test",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "bun run typecheck && bun test && bun run build"
+    "prepublishOnly": "bun run typecheck && bun test && bun run build",
+    "release": "bun run scripts/release.ts"
   },
   "peerDependencies": {
     "react": ">=18"
