@@ -21,10 +21,30 @@ export const groupByPage = (changes: Change[], firstPath?: string): PageGroup[] 
   return list
 }
 
+/** 'in section “Pricing”', or 'below “Plans”' when only a heading places it. */
+export const placeIn = (context: string) => (context.startsWith('below ') ? context : `in ${context}`)
+
+const snippet = (text: string, max = 60) => {
+  const flat = text.replace(/\s+/g, ' ').trim()
+  return flat.length > max ? `${flat.slice(0, max - 1).trimEnd()}…` : flat
+}
+
+/**
+ * e.g. `div.plan-card` “Pro plan, $20 a month…” in section “Pricing”. Without an edit, nothing else
+ * shows the element's text, so its label or the start of its text names it.
+ */
 export const describeElement = (change: Change) => {
-  const { tag, context, label } = change.target
-  const name = label && !change.edit ? `\`${tag}\` “${label}”` : `\`${tag}\``
-  return context ? `${name} in ${context}` : name
+  const { tag, hint, context, label, text, src } = change.target
+  const what = label || (!src && text && snippet(text))
+  const name = what && !change.edit ? `\`${hint ?? tag}\` “${what}”` : `\`${hint ?? tag}\``
+  return context ? `${name} ${placeIn(context)}` : name
+}
+
+/** Component and file, when the page was a development build that recorded them. */
+const origin = (change: Change) => {
+  const { component, source } = change.target
+  if (!component && !source) return ''
+  return [component && `\`${component}\``, source && `\`${source}\``].filter(Boolean).join(' at ')
 }
 
 const EXCERPT = 240
@@ -122,6 +142,7 @@ export const toPrompt = (changes: Change[], options: ExportOptions = {}): string
         parts.push(`${short === change.target.text ? 'Current text' : 'Text (excerpt)'}:\n${fence(short)}`)
       }
       if (change.target.src) parts.push(`Media: ${change.target.src}`)
+      if (origin(change)) parts.push(`Rendered by ${origin(change)}`)
       if (change.comment?.trim()) parts.push(`Note from reviewer:\n${quote(change.comment.trim())}`)
       out += `\n#### ${++n}. ${describeElement(change)}\n\n${parts.join('\n\n')}\n`
     }
@@ -154,6 +175,7 @@ export const toMarkdown = (changes: Change[], options: ExportOptions = {}): stri
     out += `\n### ${escapeMarkdown(page.title || 'Untitled page')} (\`${page.path}\`)\n\n`
     pageChanges.forEach((change, i) => {
       out += `${i + 1}. ${describeElement(change)}\n`
+      if (origin(change)) out += `   Rendered by ${origin(change)}\n`
       if (change.edit) out += `   ${inlineDiff(change.target.text, change.edit.text)}\n`
       if (change.target.src) out += `   [Media](${change.target.src})\n`
       if (change.comment?.trim()) out += `   ${quote(change.comment.trim()).replace(/\n/g, '\n   ')}\n`

@@ -80,3 +80,22 @@ test('markdown shows an inline word diff', () => {
   const md = toMarkdown([changes[0]!])
   expect(md).toContain('Ship copy ~~faster~~ **today**')
 })
+
+test('notes name the element by its hint, text and component', () => {
+  const note = change({
+    comment: 'Make this pop',
+    target: {
+      selector: 'body > div',
+      tag: 'div',
+      hint: 'div.plan-card',
+      text: 'Pro plan\nTwenty dollars a month, billed yearly, cancel any time you like',
+      context: 'below “Plans”',
+      component: 'PlanCard in Pricing',
+      source: 'src/components/PlanCard.tsx:12',
+    },
+  })
+  const md = toMarkdown([note])
+  expect(md).toContain('1. `div.plan-card` “Pro plan Twenty dollars a month, billed yearly, cancel any…” below “Plans”')
+  expect(md).toContain('Rendered by `PlanCard in Pricing` at `src/components/PlanCard.tsx:12`')
+  expect(toPrompt([note])).toContain('Rendered by `PlanCard in Pricing`')
+})

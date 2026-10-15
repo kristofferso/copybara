@@ -52,6 +52,12 @@ export type Target = {
   src?: string
   /** Human name for the element: alt text, aria-label, or a section's own heading. */
   label?: string
+  /** CSS-like name to search the source for, e.g. `div.plan-card` or `.pricing-card p`. */
+  hint?: string
+  /** The component that rendered it, e.g. 'PlanCard in Pricing'. Only in development builds. */
+  component?: string
+  /** Source file, and line when known. Only in development builds. */
+  source?: string
 }
 
 export type TextEdit = {

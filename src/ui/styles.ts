@@ -64,7 +64,10 @@ export const css: string = `
   -webkit-font-smoothing: antialiased;
   text-align: left;
   letter-spacing: normal;
+  /* The root is as wide as the panel even while it is closed; only what is visible takes clicks. */
+  pointer-events: none;
 }
+.root > * { pointer-events: auto; }
 .root[data-pos$="right"] { left: auto; right: 16px; align-items: flex-end; }
 /* At the top the launcher comes first and the panel opens below it. */
 .root[data-pos^="top"] { bottom: auto; top: 16px; flex-direction: column-reverse; }

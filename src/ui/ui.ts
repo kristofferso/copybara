@@ -5,7 +5,7 @@ import yesImage from '../assets/ui/yes.webp'
 import { diffWords } from '../diff.js'
 import { withText } from '../anchor.js'
 import { currentPage, type Editor } from '../editor.js'
-import { groupByPage, toMarkdown, toPrompt, type PageGroup } from '../export.js'
+import { groupByPage, placeIn, toMarkdown, toPrompt, type PageGroup } from '../export.js'
 import type { Store } from '../store.js'
 import type { Change, CopybaraConfig, Corner, Mode } from '../types.js'
 import { h } from './h.js'
@@ -287,8 +287,8 @@ export const createUi = ({ host, store, editor, config }: UiOptions) => {
     shadow.querySelector<HTMLElement>(`[data-id="${CSS.escape(id)}"] ${selector}`)?.focus()
 
   const where = (change: Pick<Change, 'target'>) => {
-    const { tag, context } = change.target
-    return [h('code', {}, tag), context ? ` in ${context}` : '']
+    const { tag, hint, context } = change.target
+    return [h('code', {}, hint ?? tag), context ? ` ${placeIn(context)}` : '']
   }
 
   // Panel ---------------------------------------------------------------------------------------
